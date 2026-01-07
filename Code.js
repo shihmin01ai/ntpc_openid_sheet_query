@@ -150,9 +150,19 @@ function fetchUserData(idKey, config) {
 
       const headers = data[0];
 
-      // Find row with matching ID (assuming Column A is ID)
+      // Find identifying column (Default to A/index 0, but look for specific headers)
+      let idColumnIndex = 0;
+      for (let j = 0; j < headers.length; j++) {
+        const h = String(headers[j]).trim();
+        if (h === "校務帳號" || h === "帳號") {
+          idColumnIndex = j;
+          break;
+        }
+      }
+
+      // Find row with matching ID
       for (let i = 1; i < data.length; i++) {
-        const rowKey = String(data[i][0]).trim().toLowerCase();
+        const rowKey = String(data[i][idColumnIndex]).trim().toLowerCase();
         if (rowKey === targetKey) {
           const rowData = {};
           for (let j = 0; j < headers.length; j++) {
