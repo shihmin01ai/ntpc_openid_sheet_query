@@ -23,7 +23,7 @@
 > [!IMPORTANT]
 > 詳細的資安建議與檢查清單，請參閱：[SECURITY_GUIDE.md](./SECURITY_GUIDE.md)
 
-## 🚀 快速上手
+## 快速上手
 
 1. **取得範本**：進入[📂範本資料夾](https://drive.google.com/drive/folders/1_sX98EgeDs2ujuz4vVSPHEq4oPFRTfyb?usp=sharing)，點選試算表後按右鍵點選「建立副本」。
 2. **環境設定**：在「環境設定」分頁中，填入您的學校名稱及 Logo 連結。
@@ -46,12 +46,12 @@
    - *本專案已在 `appsscript.json` 限制了最小權限（唯讀 Drive 檔案）。*
 5. **開始使用**：將產生的網址分享給校內師生即可！
 
-## 📸 介面預覽
+## 介面預覽
 
 | 登入首頁 | 查詢結果 |
 | :---: | :---: |
 | ![Login](./img/login.png) | ![Result](./img/result.jpg) |
-| 登入首頁 | 資料準備 |
+| **環境設定** | **資料準備** |
 | ![Account](./img/env.jpg) | ![Env](./img/account.jpg) |
 
 ## 📄 授權協議
