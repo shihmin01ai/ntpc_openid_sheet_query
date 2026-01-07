@@ -105,7 +105,6 @@ function handleCallback(params, config) {
         <p>${config.SCHOOL_RESTRICTION.ERROR_MESSAGE}</p>
         <p>您目前登入的單位為：<strong>${userData.school}</strong></p>
         <hr style="border: 0; border-top: 1px solid #eee; margin: 20px auto; width: 50%;">
-        <a href="${ScriptApp.getService().getUrl()}" style="color: #4f46e5; text-decoration: none; font-weight: bold;">← 返回登入頁面</a>
       </div>
     `).setTitle("存取受限");
   }
