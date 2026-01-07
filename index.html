@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-divider {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            font-weight: 300;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        p {
+            color: #64748b;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .btn-login {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.4);
+            cursor: pointer;
+            border: none;
+            width: 100%;
+            font-size: 1rem;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .btn-login:hover {
+            background: var(--primary-hover);
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+        }
+
+        .footer-note {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .spinner {
+            border: 3px solid rgba(0, 0, 0, 0.1);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+        <div class="logo-container">
+            <? if (LOGO_LEFT_BASE64) { ?>
+            <img src="<?!= LOGO_LEFT_BASE64 ?>" alt="Logo Left" class="logo-img">
+            <? } ?>
+
+            <? if (LOGO_LEFT_BASE64 && LOGO_RIGHT_BASE64) { ?>
+            <div class="logo-divider">|</div>
+            <? } ?>
+
+            <? if (LOGO_RIGHT_BASE64) { ?>
+            <img src="<?!= LOGO_RIGHT_BASE64 ?>" alt="Logo Right" class="logo-img">
+            <? } ?>
+
+            <? if (!LOGO_LEFT_BASE64 && !LOGO_RIGHT_BASE64) { ?>
+            <div style="font-size: 2rem; font-weight: bold; color: var(--primary);">OpenID</div>
+            <? } ?>
+        </div>
+        <h1>
+            <?= PAGE_TITLE ?>
+        </h1>
+        <p>請使用新北市教育局 OpenID 登入查看</p>
+
+        <a id="loginBtn" class="btn-login" href="<?= loginUrl ?>" target="_top">使用 OpenID 登入</a>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">正在準備登入...</p>
+        </div>
+
+        <div class="footer-note">
+            系統僅供
+            <?= SCHOOL_NAME ?> 師生使用
+        </div>
+    </div>
+
+    <script>
+        // Simple loading state
+        document.getElementById('loginBtn').onclick = function () {
+            document.getElementById('loading').style.display = 'block';
+            this.style.display = 'none';
+        };
+    </script>
+</body>
+
+</html>

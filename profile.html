@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --success: #10b981;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            margin: 0;
+            padding: 2rem;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .profile-header {
+            background: linear-gradient(to right, #4f46e5, #818cf8);
+            padding: 2rem;
+            color: white;
+        }
+
+        .info-grid {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 0.75rem;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .highlight {
+            color: var(--primary);
+            background: #eef2ff;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        th {
+            background: #f8fafc;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-success {
+            color: var(--success) !important;
+            font-weight: 600;
+        }
+
+        .status-default {
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .error-msg {
+            padding: 2rem;
+            color: #94a3b8;
+            font-style: italic;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <?
+        // Helper to extract common fields from any matching sheet
+        let commonNum = "";
+        let commonSubject = "";
+        if (results) {
+            for (let s in results) {
+                if (!commonNum && results[s]['編號']) commonNum = results[s]['編號'];
+                if (!commonSubject && results[s]['任教科目']) commonSubject = results[s]['任教科目'];
+            }
+        }
+    ?>
+    <div class="container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+                    <span style="font-size: 2rem; font-weight: 600;">
+                        <?= user.name ?>
+                    </span>
+                    <span
+                        style="font-size: 1rem; background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 20px; opacity: 0.9;">
+                        <?= user.email.split('@')[0] ?>
+                    </span>
+                    <? if (commonNum) { ?>
+                    <span
+                        style="font-size: 1rem; background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 20px; opacity: 0.9;">
+                        <?= commonNum ?>
+                    </span>
+                    <? } ?>
+                </div>
+                <div
+                    style="margin-top: 1rem; font-size: 1.1rem; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                    <div>
+                        <span style="opacity: 0.8; font-size: 0.9rem;">所屬學校：</span>
+                        <span style="font-weight: 500;">
+                            <?= user.school || SCHOOL_NAME ?>
+                        </span>
+                    </div>
+                    <? if (commonSubject) { ?>
+                    <div>
+                        <span style="opacity: 0.8; font-size: 0.9rem;">任教科目：</span>
+                        <span style="font-weight: 500;">
+                            <?= commonSubject ?>
+                        </span>
+                    </div>
+                    <? } ?>
+                </div>
+            </div>
+
+            <div style="padding: 2rem;">
+                <h3 style="margin-top: 0; color: #1e293b; font-size: 1.25rem; margin-bottom: 1.5rem;">
+                    查詢結果
+                </h3>
+
+                <? if (results) { ?>
+                <? for (let sheetName in results) {
+                        let sheetData = results[sheetName];
+                    ?>
+                <div style="margin-bottom: 2rem; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+                    <div
+                        style="background: #f8fafc; padding: 0.75rem 1.25rem; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: var(--primary); display: flex; justify-content: space-between;">
+                        <span>📍
+                            <?= sheetName ?>
+                        </span>
+                    </div>
+                    <div style="padding: 0.5rem 0;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="text-align: left; padding-left: 1.5rem;">項目</th>
+                                    <th style="padding-right: 1.5rem;">內容 / 狀態</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <? for (let key in sheetData) {
+                                         // 移除冗餘欄位：姓名、帳號、編號、科目
+                                         const lowKey = key.toLowerCase();
+                                         if (key === "姓名" || key === "編號" || key === "任教科目" ||
+                                             lowKey === "校務帳號" || lowKey === "帳號" || lowKey === "id" ||
+                                             String(sheetData[key]).toLowerCase() === user.email.split('@')[0].toLowerCase()) continue;
+                                    ?>
+                                <tr>
+                                    <td style="text-align: left; padding-left: 1.5rem; color: #64748b;">
+                                        <?= key ?>
+                                    </td>
+                                    <td style="padding-right: 1.5rem;"
+                                        class="<?= String(sheetData[key]).trim() === '已完成' || String(sheetData[key]).trim() === '已繳交' ? 'status-success' : 'status-default' ?>">
+                                        <?= sheetData[key] ?>
+                                    </td>
+                                </tr>
+                                <? } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <? } ?>
+                <? } else { ?>
+                <div class="error-msg">目前在各資料表中查無您的相關資料。</div>
+                <? } ?>
+            </div>
+        </div>
+        <script>
+            /**
+             * 網址優化腳本 (Google Apps Script Web App 專用)
+             * 使用官方 API (google.script.history) 來替換網址列中的 OpenID 參數
+             * 這樣重新整理頁面時，系統會從 token 讀取快取的 Session，避免重複驗證導致報錯
+             */
+            (function () {
+                const token = "<?!= token || '' ?>";
+                if (!token) return;
+
+                // 檢查目前網址是否包含 OpenID 參數
+                const search = window.location.search || "";
+                const hasOpenId = search.indexOf('openid.') !== -1;
+                const hasToken = search.indexOf('token=') !== -1;
+
+                if (hasOpenId || !hasToken) {
+                    try {
+                        // 優先使用 GAS 官方 API (這會真正改變瀏覽器網址列)
+                        if (typeof google !== 'undefined' && google.script && google.script.history) {
+                            google.script.history.replace(null, { "token": token }, "");
+                            console.log("URL cleaned via google.script.history");
+                        }
+                        // 備案：傳統 HTML5 歷史紀錄操作 (在某些沙箱環境下可能受限)
+                        else if (window.history && window.history.replaceState) {
+                            const baseUrl = window.location.origin + window.location.pathname;
+                            window.history.replaceState({}, document.title, baseUrl + "?token=" + token);
+                            console.log("URL cleaned via replaceState fallback");
+                        }
+                    } catch (e) {
+                        console.error("URL optimization failed:", e);
+                    }
+                }
+            })();
+        </script>
+</body>
+
+</html>

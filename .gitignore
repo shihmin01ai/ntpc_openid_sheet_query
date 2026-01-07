@@ -1,0 +1,22 @@
+# Google Apps Script files
+*.js
+*.html
+appsscript.json
+
+# Clasp configuration
+.clasp.json
+
+# Local guide and logs
+GAS_SYNC_GUIDE.md
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Do NOT ignore these specific script files
+!Code.js
+!Config.js
+!index.html
+!profile.html
+!appsscript.json
+!SECURITY_GUIDE.md
